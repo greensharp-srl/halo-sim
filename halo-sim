@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Launcher: keeps the Python environment outside the repo (~/.venvs/halo-sim).
+#   ./halo-sim setup              install/update dependencies
+#   ./halo-sim serve              start the virtual glasses
+#   ./halo-sim run app.py ...     run a brilliant-sdk host app on them
+#   ./halo-sim repl               Lua REPL on the virtual glasses
+#   ./halo-sim test               run the test suite
+set -euo pipefail
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export UV_PROJECT_ENVIRONMENT="${UV_PROJECT_ENVIRONMENT:-$HOME/.venvs/halo-sim}"
+export PYTHONDONTWRITEBYTECODE=1
+UV="$(command -v uv || echo "$HOME/.local/bin/uv")"
+if [ ! -x "$UV" ]; then
+  echo "uv not found: curl -LsSf https://astral.sh/uv/install.sh | sh" >&2
+  exit 1
+fi
+case "${1:-}" in
+  setup) exec "$UV" sync --project "$HERE" --python 3.12 --all-extras ;;
+  test)  shift; cd "$HERE" && exec "$UV" run --project "$HERE" pytest -p no:cacheprovider "$@" ;;
+  *)     exec "$UV" run --project "$HERE" halo-sim "$@" ;;
+esac

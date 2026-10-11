@@ -1,0 +1,4 @@
+# Built-in example app: camera, mic, speaker, IMU, button and taps.
+id = "halo_demo"
+name = "Halo Demo"
+host = "halo_demo.py"

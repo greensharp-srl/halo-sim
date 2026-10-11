@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Halo SIM">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+<title>Halo SIM</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<video id="cam" playsinline muted autoplay></video>
+
+<main id="stage">
+  <div id="lens">
+    <canvas id="display" width="256" height="256"></canvas>
+    <div id="lens-note"></div>
+  </div>
+</main>
+
+<header id="topbar">
+  <span id="conn" class="dot off" title="link to the simulator"></span>
+  <span id="state">offline</span>
+  <span id="host" class="muted"></span>
+  <span class="spacer"></span>
+  <span id="mic-ind" class="ind" hidden>MIC <i id="mic-level"></i></span>
+  <span id="spk-ind" class="ind" hidden>SPK</span>
+  <span id="batt" class="muted"></span>
+</header>
+
+<footer id="controls">
+  <button id="btn" class="hw" aria-label="Halo button: click, double click, hold 1 s">BUTTON<small>click · double · hold</small></button>
+  <div class="mid">
+    <button id="flip" class="chip" title="switch camera">⟲ cam</button>
+    <button id="see" class="chip" title="toggle see-through view">see-through</button>
+    <button id="con" class="chip" title="console">console</button>
+    <button id="home" class="chip" title="leave the app, back to the launcher menu">⌂ home</button>
+  </div>
+  <button id="tap" class="hw" aria-label="Temple tap pad: 1 to 3 taps">TAP<small>1 · 2 · 3 taps</small></button>
+</footer>
+
+<section id="console" hidden>
+  <div id="log"></div>
+  <form id="repl">
+    <input id="lua" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Lua (when no host app is connected)">
+    <button type="submit" class="chip">run</button>
+    <button type="button" id="brk" class="chip">break</button>
+    <button type="button" id="rst" class="chip">restart</button>
+  </form>
+</section>
+
+<div id="toast"></div>
+<div id="flash"></div>
+
+<section id="start">
+  <div class="card">
+    <h1>Halo SIM</h1>
+    <p>This device becomes the glasses: its <b>camera</b>, <b>microphone</b>, <b>motion sensors</b> and <b>speaker</b> feed the virtual Halo, and the round display shows what the glasses draw.</p>
+    <div id="insecure" hidden>
+      <p class="warn">Camera and microphone need a secure (HTTPS) page.</p>
+      <ol>
+        <li>Download and install the local certificate: <a id="ca-link" href="#">halo-sim-ca.crt</a></li>
+        <li>iPhone: Settings → General → VPN &amp; Device Management → install the profile, then Settings → General → About → Certificate Trust Settings → enable “Halo SIM Local CA”.<br>Android: Settings → Security → Encryption &amp; credentials → Install a certificate → CA certificate.</li>
+        <li>Open <a id="https-link" href="#">the secure page</a>.</li>
+      </ol>
+    </div>
+    <label><input type="checkbox" id="opt-cam" checked> Camera</label>
+    <label><input type="checkbox" id="opt-mic" checked> Microphone</label>
+    <label><input type="checkbox" id="opt-imu" checked> Motion sensors</label>
+    <button id="go">Start</button>
+    <p class="muted small">Desktop keys: Space click · D double · L long · T tap · 2 double tap · 3 triple tap</p>
+  </div>
+</section>
+
+<script src="/static/sfx.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>
